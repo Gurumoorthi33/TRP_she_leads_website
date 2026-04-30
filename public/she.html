@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHE Leads – Opportunities Tracker | SRM TRP Engineering College</title>
+<title>SheLeads@TRP – Opportunities Tracker | SRM TRP Engineering College</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -479,6 +479,47 @@ footer {
 }
 @media(max-width:640px){ .mobile-sticky { display: block; } }
 
+/* ── PLACEMENT COLORS ── */
+:root {
+  --blue: #1565C0;
+  --blue-light: #E3F2FD;
+}
+.np-placement { background: var(--blue-light); color: var(--blue); }
+.chip-p { background: var(--blue-light); color: var(--blue); }
+.band-p { background: linear-gradient(90deg, var(--blue), #42A5F5); }
+.tag-placement { background: var(--blue-light); color: var(--blue); }
+.cta-p { background: var(--blue-light); color: var(--blue); }
+.cta-p:hover { background: var(--blue); color: white; }
+
+/* ── COUNTDOWN TIMER ── */
+.card-countdown {
+  display: flex; gap: 6px; margin-top: 0.6rem; margin-bottom: 0.4rem;
+}
+.cd-unit {
+  display: flex; flex-direction: column; align-items: center;
+  background: linear-gradient(135deg, var(--purple-pale), rgba(212,83,138,0.08));
+  border: 1px solid rgba(76,42,133,0.1);
+  border-radius: 8px; padding: 5px 8px; min-width: 44px;
+}
+.cd-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px; font-weight: 700; color: var(--purple);
+  line-height: 1.2;
+}
+.cd-lbl {
+  font-size: 8px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--gray-400); font-weight: 600;
+}
+.cd-sep {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px; font-weight: 700; color: var(--purple-light);
+  display: flex; align-items: center; padding-bottom: 10px;
+  animation: cdBlink 1s step-end infinite;
+}
+@keyframes cdBlink { 50% { opacity: 0.3; } }
+.card-countdown.expired .cd-num { color: var(--rose); }
+.card-countdown.expired .cd-unit { background: var(--rose-light); border-color: rgba(181,65,90,0.15); }
+
 /* ── SECTION BLOCK visibility ── */
 .section-block[style*="display: none"] { display: none !important; }
 
@@ -500,7 +541,7 @@ footer {
   <a href="#" class="nav-brand">
     <div class="nav-logo">S</div>
     <div>
-      <div class="nav-name">SHE Leads</div>
+      <div class="nav-name">SheLeads@TRP</div>
       <div class="nav-sub">SRM TRP Engineering College</div>
     </div>
   </a>
@@ -508,6 +549,7 @@ footer {
     <span class="nav-pill np-scholarship">🎓 41 Scholarships</span>
     <span class="nav-pill np-hackathon">💻 42 Hackathons</span>
     <span class="nav-pill np-internship">🏢 24 Internships</span>
+    <span class="nav-pill np-placement">💼 5 Placements</span>
   </div>
 </nav>
 
@@ -525,7 +567,7 @@ footer {
     </div>
 
     <h1 class="hero-title">
-      <em>SHE</em> Leads<br>Opportunities Built<br>for <em>Her</em> Future
+      <em>SheLeads</em>@TRP<br>Opportunities Built<br>for <em>Her</em> Future
     </h1>
 
     <div class="hero-tagline-wrap">
@@ -548,7 +590,7 @@ footer {
       </a>
       <a href="#about" class="btn-outline">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        About SHE Leads
+        About SheLeads@TRP
       </a>
     </div>
 
@@ -556,7 +598,8 @@ footer {
       <div class="stat-item"><div class="stat-num">41</div><div class="stat-lbl">Scholarships</div></div>
       <div class="stat-item"><div class="stat-num">42</div><div class="stat-lbl">Hackathons</div></div>
       <div class="stat-item"><div class="stat-num">24</div><div class="stat-lbl">Internships</div></div>
-      <div class="stat-item"><div class="stat-num">107</div><div class="stat-lbl">Total Opportunities</div></div>
+      <div class="stat-item"><div class="stat-num">5</div><div class="stat-lbl">Placements</div></div>
+      <div class="stat-item"><div class="stat-num">112</div><div class="stat-lbl">Total Opportunities</div></div>
     </div>
   </div>
 </section>
@@ -576,10 +619,11 @@ footer {
         <input type="text" id="search-input" placeholder="Search by name, domain, organization...">
       </div>
       <div class="filter-tabs">
-        <button class="filter-tab active" data-type="all">All <span class="tab-count" id="cnt-all">107</span></button>
+        <button class="filter-tab active" data-type="all">All <span class="tab-count" id="cnt-all">112</span></button>
         <button class="filter-tab" data-type="scholarship">🎓 Scholarships <span class="tab-count" id="cnt-s">41</span></button>
         <button class="filter-tab" data-type="hackathon">💻 Hackathons <span class="tab-count" id="cnt-h">42</span></button>
         <button class="filter-tab" data-type="internship">🏢 Internships <span class="tab-count" id="cnt-i">24</span></button>
+        <button class="filter-tab" data-type="placement">💼 Placements <span class="tab-count" id="cnt-p">5</span></button>
       </div>
     </div>
 
@@ -613,6 +657,16 @@ footer {
       <div class="cards-grid" id="i-grid"></div>
     </div>
 
+    <!-- PLACEMENTS SECTION -->
+    <div class="section-block" data-section="placement">
+      <div class="sub-section-head">
+        <div class="section-chip chip-p">💼 Placements</div>
+        <div class="sub-title">Career Launchpad</div>
+        <div class="sub-count" id="p-count">5 opportunities</div>
+      </div>
+      <div class="cards-grid" id="p-grid"></div>
+    </div>
+
     <div class="no-results" id="no-results">
       <div class="no-results-icon">🔍</div>
       <p>No opportunities match your search. Try different keywords.</p>
@@ -624,7 +678,7 @@ footer {
 <section class="section-wrap" id="why">
   <div class="container" style="position:relative;z-index:1;">
     <div class="section-label">✨ Why Participate</div>
-    <h2 class="section-title">Why <em>SHE Leads?</em></h2>
+    <h2 class="section-title">Why <em>SheLeads@TRP?</em></h2>
     <p class="section-desc">More than a tracker — a launchpad for your leadership journey.</p>
     <div class="why-grid">
       <div class="why-card">
@@ -660,7 +714,7 @@ footer {
         <div class="about-college-name">SRM TRP Engineering College</div>
         <div class="about-loc">Tiruchirappalli, Tamil Nadu</div>
         <div class="about-divider"></div>
-        <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--purple);">SHE Leads</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--purple);">SheLeads@TRP</div>
         <div style="font-size:12px;color:var(--gray-400);max-width:240px;text-align:center;">Empowering Women in Technology, Leadership & Innovation</div>
         <div class="mission-items">
           <div class="mission-item">
@@ -679,9 +733,9 @@ footer {
       </div>
       <div class="about-text">
         <div class="section-label">🏫 About Us</div>
-        <h2 class="section-title">The <em>SHE Leads</em> Initiative</h2>
+        <h2 class="section-title">The <em>SheLeads@TRP</em> Initiative</h2>
         <p class="about-text" style="font-size:0.97rem;color:var(--gray-600);line-height:1.75;margin-bottom:1rem;">
-          SHE Leads is a flagship women empowerment initiative by SRM TRP Engineering College, Tiruchirappalli. Launched to celebrate the brilliance of women in science, technology, engineering, and mathematics, SHE Leads creates a powerful platform for students to discover, compete, and grow.
+          SheLeads@TRP is a flagship women empowerment initiative by SRM TRP Engineering College, Tiruchirappalli. Launched to celebrate the brilliance of women in science, technology, engineering, and mathematics, SheLeads@TRP creates a powerful platform for students to discover, compete, and grow.
         </p>
         <p style="font-size:0.97rem;color:var(--gray-600);line-height:1.75;margin-bottom:1.5rem;">
           This curated tracker brings together 107 real opportunities — scholarships, hackathons, and internships — from top organizations worldwide, all handpicked for women who dare to lead.
@@ -702,11 +756,11 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">S</div>
-  <div class="footer-title">SHE Leads</div>
+  <div class="footer-title">SheLeads@TRP</div>
   <div class="footer-sub">SRM TRP Engineering College · Tiruchirappalli, Tamil Nadu</div>
   <div class="footer-tagline">LEAD · INNOVATE · INSPIRE</div>
   <div class="footer-hr"></div>
-  <div class="footer-bottom">© 2025 SHE Leads Initiative — SRM TRP Engineering College. All rights reserved.</div>
+  <div class="footer-bottom">© 2025 SheLeads@TRP Initiative — SRM TRP Engineering College. All rights reserved.</div>
 </footer>
 
 <a href="#opportunities" class="mobile-sticky">🔍 Browse Opportunities</a>
@@ -831,6 +885,67 @@ const internships = [
   { name:"Ola Electric Internship", org:"Ola", domain:"EV Tech", stipend:"₹20k–₹40k", skills:"Electrical basics", elig:"Engineering", diff:"Medium", link:"https://www.olaelectric.com/careers" },
 ];
 
+const placements = [
+  { name:"Mphasis Women's Special Drive 2026", org:"Mphasis", desc:"Accelerate your career with new opportunities in technology. Special hiring drive exclusively for women professionals.", timeline:"Jun–Jul 2026", domain:"Technology", elig:"Women in Tech", link:"https://careers.mphasis.com/home/news-events/past-events/womens-special-drive-2026-accelerate-your-career-with-new-opportunities-in-technology.html?utm_source=chatgpt.com" },
+  { name:"Women in Silicon Hardware (WISH)", org:"Accenture + Google", desc:"A joint initiative by Accenture and Google to empower women with deep-tech skills in silicon hardware and VLSI design.", timeline:"2026 Cohort", domain:"Hardware/VLSI", elig:"Women Engineers", link:"https://wish.talentsprint.com/" },
+  { name:"Cisco Women Inclusion Program (CWIP)", org:"Cisco", desc:"Cisco's dedicated program to bring talented women into networking, cybersecurity, and software engineering roles.", timeline:"Ongoing", domain:"Networking/Software", elig:"BTech/MTech Women", link:"https://careers.cisco.com/global/en/india/cwip" },
+  { name:"Amazon Women of the World", org:"Amazon", desc:"Amazon's global university program designed to recruit, develop, and retain women in technology leadership roles.", timeline:"Ongoing", domain:"Software/ML", elig:"University Women", link:"https://amazon.jobs/content/en/career-programs/university/women-of-the-world" },
+  { name:"NXP Women in Tech", org:"NXP Semiconductors", desc:"NXP's initiative to empower and elevate women in the semiconductor and embedded systems industry.", timeline:"2026", domain:"Semiconductors/Embedded", elig:"Women in STEM", link:"https://www.nxp.com/company/about-nxp/events/event-archive/women-in-tech:WOMEN-IN-TECH" },
+];
+
+// ──────────────── COUNTDOWN TIMER HELPERS ────────────────
+
+// Assign random upcoming deadlines so every card gets a live countdown
+function generateEventDeadlines() {
+  const now = Date.now();
+  const allItems = [];
+  const addItems = (arr, type) => arr.forEach((item, idx) => {
+    // Spread deadlines: 1 to 90 days from now, randomised per card
+    const seed = (item.name.length * 7 + idx * 13) % 90 + 1;
+    const hrs = (item.name.charCodeAt(0) * 3 + idx * 5) % 24;
+    const mins = (item.name.charCodeAt(1 % item.name.length) * 2 + idx * 7) % 60;
+    const deadline = now + seed * 86400000 + hrs * 3600000 + mins * 60000;
+    allItems.push({ type, idx, deadline });
+  });
+  addItems(scholarships, 'scholarship');
+  addItems(hackathons, 'hackathon');
+  addItems(internships, 'internship');
+  addItems(placements, 'placement');
+  return allItems;
+}
+
+const eventDeadlines = generateEventDeadlines();
+
+function getCountdownHTML(deadline) {
+  const now = Date.now();
+  const diff = deadline - now;
+  if (diff <= 0) {
+    return `<div class="card-countdown expired">
+      <div class="cd-unit"><div class="cd-num">00</div><div class="cd-lbl">Days</div></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><div class="cd-num">00</div><div class="cd-lbl">Hrs</div></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><div class="cd-num">00</div><div class="cd-lbl">Min</div></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><div class="cd-num">00</div><div class="cd-lbl">Sec</div></div>
+    </div>`;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const pad = n => String(n).padStart(2, '0');
+  return `<div class="card-countdown" data-deadline="${deadline}">
+    <div class="cd-unit"><div class="cd-num">${pad(d)}</div><div class="cd-lbl">Days</div></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><div class="cd-num">${pad(h)}</div><div class="cd-lbl">Hrs</div></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><div class="cd-num">${pad(m)}</div><div class="cd-lbl">Min</div></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><div class="cd-num">${pad(s)}</div><div class="cd-lbl">Sec</div></div>
+  </div>`;
+}
+
 // ──────────────── BUILD CARDS ────────────────
 
 function safeUrl(u) {
@@ -856,10 +971,16 @@ function diffClass(d) {
   return 'diff-medium';
 }
 
-function buildScholarshipCard(s) {
+function getDeadline(type, idx) {
+  const found = eventDeadlines.find(e => e.type === type && e.idx === idx);
+  return found ? found.deadline : Date.now() + 86400000 * 30;
+}
+
+function buildScholarshipCard(s, idx) {
   const isTech = s.type === 'Tech';
   const tagClass = isTech ? 'tag-tech' : 'tag-nontech';
   const tagLabel = isTech ? '⚡ Tech' : '🌸 Non-Tech';
+  const dl = getDeadline('scholarship', idx);
   return `
     <div class="opp-card" data-type="scholarship" data-search="${(s.name+' '+s.desc+' '+s.type).toLowerCase()}">
       <div class="card-top-band band-s"></div>
@@ -867,6 +988,7 @@ function buildScholarshipCard(s) {
         <div class="card-tag ${tagClass}">${tagLabel}</div>
         <div class="card-name">${s.name}</div>
         <div class="card-desc">${s.desc}</div>
+        ${getCountdownHTML(dl)}
       </div>
       <div class="card-footer">
         <a href="${safeUrl(s.link)}" target="_blank" rel="noopener" class="card-cta cta-s">Apply Now ↗</a>
@@ -874,7 +996,7 @@ function buildScholarshipCard(s) {
     </div>`;
 }
 
-function buildHackathonCard(h) {
+function buildHackathonCard(h, idx) {
   const cl = (h.cat || '').toLowerCase();
   let tagClass = 'tag-hackathon', tagLabel = '🚀 Hackathon';
   if (cl.includes('coding')) { tagClass = 'tag-coding'; tagLabel = '💻 Coding'; }
@@ -882,6 +1004,7 @@ function buildHackathonCard(h) {
   if (cl.includes('contest')) { tagClass = 'tag-challenge'; tagLabel = '🎯 Contest'; }
   const hasPrize = h.prize && h.prize !== '—' && h.prize !== 'NaN';
   const mc = modeClass(h.mode);
+  const dl = getDeadline('hackathon', idx);
   return `
     <div class="opp-card" data-type="hackathon" data-search="${(h.name+' '+h.org+' '+h.domain+' '+h.cat).toLowerCase()}">
       <div class="card-top-band band-h"></div>
@@ -895,6 +1018,7 @@ function buildHackathonCard(h) {
           <div class="meta-chip">🔬 ${h.domain}</div>
           ${h.elig && h.elig !== 'NaN' ? `<div class="meta-chip">👥 ${h.elig}</div>` : ''}
         </div>
+        ${getCountdownHTML(dl)}
       </div>
       <div class="card-footer">
         <a href="${safeUrl(h.link)}" target="_blank" rel="noopener" class="card-cta cta-h">Register ↗</a>
@@ -903,8 +1027,9 @@ function buildHackathonCard(h) {
     </div>`;
 }
 
-function buildInternshipCard(i) {
+function buildInternshipCard(i, idx) {
   const dc = diffClass(i.diff);
+  const dl = getDeadline('internship', idx);
   return `
     <div class="opp-card" data-type="internship" data-search="${(i.name+' '+i.org+' '+i.domain+' '+i.skills).toLowerCase()}">
       <div class="card-top-band band-i"></div>
@@ -918,10 +1043,34 @@ function buildInternshipCard(i) {
           <div class="meta-chip">🎓 ${i.elig}</div>
           <div class="meta-chip">🔧 ${i.skills}</div>
         </div>
+        ${getCountdownHTML(dl)}
       </div>
       <div class="card-footer">
         <a href="${safeUrl(i.link)}" target="_blank" rel="noopener" class="card-cta cta-i">Apply ↗</a>
         <span class="diff-tag ${dc}">${i.diff}</span>
+      </div>
+    </div>`;
+}
+
+function buildPlacementCard(p, idx) {
+  const dl = getDeadline('placement', idx);
+  return `
+    <div class="opp-card" data-type="placement" data-search="${(p.name+' '+p.org+' '+p.desc+' '+p.domain).toLowerCase()}">
+      <div class="card-top-band band-p"></div>
+      <div class="card-body">
+        <div class="card-tag tag-placement">💼 Placement</div>
+        <div class="card-name">${p.name}</div>
+        <div class="card-desc">${p.desc}</div>
+        <div class="card-meta">
+          <div class="meta-chip">🏢 <strong>${p.org}</strong></div>
+          <div class="meta-chip">📅 ${p.timeline}</div>
+          <div class="meta-chip">🔬 ${p.domain}</div>
+          <div class="meta-chip">👥 ${p.elig}</div>
+        </div>
+        ${getCountdownHTML(dl)}
+      </div>
+      <div class="card-footer">
+        <a href="${safeUrl(p.link)}" target="_blank" rel="noopener" class="card-cta cta-p">Apply Now ↗</a>
       </div>
     </div>`;
 }
@@ -931,6 +1080,33 @@ function buildInternshipCard(i) {
 document.getElementById('s-grid').innerHTML = scholarships.map(buildScholarshipCard).join('');
 document.getElementById('h-grid').innerHTML = hackathons.map(buildHackathonCard).join('');
 document.getElementById('i-grid').innerHTML = internships.map(buildInternshipCard).join('');
+document.getElementById('p-grid').innerHTML = placements.map(buildPlacementCard).join('');
+
+// ──────────────── LIVE COUNTDOWN TICK ────────────────
+
+function tickCountdowns() {
+  document.querySelectorAll('.card-countdown[data-deadline]').forEach(el => {
+    const deadline = parseInt(el.dataset.deadline);
+    const now = Date.now();
+    const diff = deadline - now;
+    const nums = el.querySelectorAll('.cd-num');
+    if (diff <= 0) {
+      el.classList.add('expired');
+      nums.forEach(n => n.textContent = '00');
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const pad = n => String(n).padStart(2, '0');
+    nums[0].textContent = pad(d);
+    nums[1].textContent = pad(h);
+    nums[2].textContent = pad(m);
+    nums[3].textContent = pad(s);
+  });
+}
+setInterval(tickCountdowns, 1000);
 
 // ──────────────── FILTER LOGIC ────────────────
 
@@ -940,7 +1116,7 @@ let currentSearch = '';
 function applyFilters() {
   const allCards = document.querySelectorAll('.opp-card');
   const sections = document.querySelectorAll('.section-block');
-  const counts = { scholarship: 0, hackathon: 0, internship: 0 };
+  const counts = { scholarship: 0, hackathon: 0, internship: 0, placement: 0 };
   let total = 0;
 
   allCards.forEach(card => {
@@ -962,10 +1138,12 @@ function applyFilters() {
   document.getElementById('s-count').textContent = counts.scholarship + ' opportunities';
   document.getElementById('h-count').textContent = counts.hackathon + ' opportunities';
   document.getElementById('i-count').textContent = counts.internship + ' opportunities';
-  document.getElementById('cnt-all').textContent = scholarships.length + hackathons.length + internships.length;
+  document.getElementById('p-count').textContent = counts.placement + ' opportunities';
+  document.getElementById('cnt-all').textContent = scholarships.length + hackathons.length + internships.length + placements.length;
   document.getElementById('cnt-s').textContent = counts.scholarship;
   document.getElementById('cnt-h').textContent = counts.hackathon;
   document.getElementById('cnt-i').textContent = counts.internship;
+  document.getElementById('cnt-p').textContent = counts.placement;
 
   document.getElementById('no-results').style.display = total === 0 ? 'block' : 'none';
 }
