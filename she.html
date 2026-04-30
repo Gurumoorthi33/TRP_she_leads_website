@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHE Leads – Opportunities Tracker | SRM TRP Engineering College</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --purple: #4C2A85;
+  --purple-mid: #6B3FA0;
+  --purple-light: #9B6FD4;
+  --purple-pale: #F0EAF8;
+  --pink: #D4538A;
+  --pink-light: #F9E0EE;
+  --gold: #C8932A;
+  --gold-light: #FDF3DC;
+  --teal: #2A7A72;
+  --teal-light: #E0F4F2;
+  --rose: #B5415A;
+  --rose-light: #FDEDF1;
+  --white: #FFFFFF;
+  --off-white: #FAFAF8;
+  --gray-100: #F5F3F0;
+  --gray-200: #E8E5E0;
+  --gray-400: #9A9690;
+  --gray-600: #5A5550;
+  --gray-800: #2C2A28;
+  --ink: #0f0e0c;
+  --border: rgba(15,14,12,0.08);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--gray-800);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── SCROLL PROGRESS ── */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 300;
+  background: linear-gradient(90deg, var(--purple), var(--pink), var(--gold));
+  width: 0%; transition: width 0.1s linear;
+}
+
+/* ── NAVBAR ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  height: 68px;
+  background: rgba(250,250,248,0.9);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(76,42,133,0.08);
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 4px 30px rgba(76,42,133,0.12); }
+
+.nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 900;
+  box-shadow: 0 4px 16px rgba(76,42,133,0.3);
+}
+.nav-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px; color: var(--purple); }
+.nav-sub { font-size: 10px; color: var(--gray-400); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1; }
+
+.nav-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.nav-pill {
+  padding: 5px 14px; border-radius: 100px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+  cursor: pointer; border: none; transition: all 0.2s;
+}
+.np-all { background: var(--purple); color: white; }
+.np-scholarship { background: var(--gold-light); color: #7a5a0a; }
+.np-hackathon { background: var(--rose-light); color: var(--rose); }
+.np-internship { background: var(--teal-light); color: var(--teal); }
+
+@media(max-width:768px){
+  nav { padding: 0 1.2rem; }
+  .nav-pills { display: none; }
+  .nav-sub { display: none; }
+}
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  padding: 100px 2rem 6rem;
+  text-align: center;
+  background: var(--white);
+}
+
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 30%, rgba(155,111,212,0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 85% 65%, rgba(212,83,138,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 55% 15%, rgba(200,147,42,0.09) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 10% 85%, rgba(42,122,114,0.08) 0%, transparent 50%);
+  animation: bgFloat 9s ease-in-out infinite alternate;
+}
+@keyframes bgFloat { from { opacity:0.7; } to { opacity:1; } }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--purple-pale); border: 1px solid rgba(76,42,133,0.2);
+  padding: 6px 18px; border-radius: 100px; margin-bottom: 2rem;
+  font-size: 12px; font-weight: 600; color: var(--purple);
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.badge-pulse { width: 7px; height: 7px; background: var(--pink); border-radius: 50%; animation: pulseAnim 2s infinite; }
+@keyframes pulseAnim { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(1.4);} }
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 7vw, 6.2rem);
+  font-weight: 900; line-height: 1.06;
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+}
+.hero-title em { color: var(--purple); font-style: italic; }
+
+.hero-tagline-wrap { height: 2.2rem; overflow: hidden; margin-bottom: 1.8rem; }
+.hero-tagline {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--pink); font-weight: 600;
+  animation: tagSlide 14s infinite;
+}
+.tagline-line { line-height: 2.2rem; }
+@keyframes tagSlide {
+  0%,22%{transform:translateY(0)}
+  25%,47%{transform:translateY(-100%)}
+  50%,72%{transform:translateY(-200%)}
+  75%,97%{transform:translateY(-300%)}
+  100%{transform:translateY(0)}
+}
+
+.hero-desc { max-width: 540px; font-size: 1rem; color: var(--gray-600); line-height: 1.75; margin: 0 auto 2.8rem; }
+
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 3.5rem; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--purple); color: white;
+  padding: 14px 32px; border-radius: 100px;
+  font-size: 14px; font-weight: 600; text-decoration: none;
+  box-shadow: 0 8px 28px rgba(76,42,133,0.35); transition: all 0.25s;
+}
+.btn-primary:hover { background: var(--purple-mid); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(76,42,133,0.4); }
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--purple);
+  padding: 13px 32px; border-radius: 100px; border: 1.5px solid rgba(76,42,133,0.35);
+  font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.25s;
+}
+.btn-outline:hover { background: var(--purple-pale); border-color: var(--purple); }
+
+.hero-stats { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem; font-weight: 900;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+.stat-lbl { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+
+/* Floating shapes */
+.fshape {
+  position: absolute; border-radius: 50%;
+  pointer-events: none; z-index: 0;
+  animation: fFloat linear infinite;
+}
+@keyframes fFloat {
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-28px) rotate(180deg);}
+}
+
+/* ── SECTION BASE ── */
+.section-wrap { padding: 5.5rem 2rem; }
+.container { max-width: 1280px; margin: 0 auto; }
+
+.section-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--purple-pale); color: var(--purple);
+  padding: 5px 16px; border-radius: 100px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900; color: var(--gray-800); line-height: 1.15;
+  margin-bottom: 0.6rem;
+}
+.section-title em { color: var(--purple); font-style: italic; }
+.section-desc { font-size: 0.95rem; color: var(--gray-400); max-width: 500px; }
+
+/* ── FILTER BAR ── */
+#opportunities { background: var(--gray-100); }
+
+.filter-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  margin-bottom: 2rem; padding: 1.2rem 1.5rem;
+  background: white; border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+}
+.search-wrap { flex: 1; min-width: 200px; position: relative; }
+.search-wrap input {
+  width: 100%; padding: 10px 16px 10px 42px;
+  border: 1px solid var(--gray-200); border-radius: 100px;
+  font-size: 14px; font-family: 'DM Sans', sans-serif;
+  background: var(--gray-100); color: var(--gray-800);
+  outline: none; transition: border-color 0.2s;
+}
+.search-wrap input:focus { border-color: var(--purple-light); background: white; }
+.search-icon {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; color: var(--gray-400);
+}
+
+.filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-tab {
+  padding: 8px 18px; border-radius: 100px; border: 1px solid var(--gray-200);
+  font-size: 13px; font-weight: 500; cursor: pointer; background: white;
+  color: var(--gray-600); transition: all 0.2s; white-space: nowrap;
+}
+.filter-tab:hover { border-color: var(--purple-light); color: var(--purple); }
+.filter-tab.active {
+  background: var(--purple); color: white;
+  border-color: var(--purple); box-shadow: 0 4px 16px rgba(76,42,133,0.25);
+}
+.tab-count {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  font-size: 9px; font-weight: 700; margin-left: 5px;
+  background: rgba(255,255,255,0.25); color: white;
+}
+.filter-tab:not(.active) .tab-count { background: var(--gray-100); color: var(--gray-400); }
+
+/* ── SECTION HEADS ── */
+.sub-section-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 2rem 0 1.2rem;
+  border-top: 1px dashed var(--gray-200);
+}
+.sub-section-head:first-child { border-top: none; padding-top: 0; }
+.section-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 100px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.chip-s { background: var(--gold-light); color: #7a5a0a; }
+.chip-h { background: var(--rose-light); color: var(--rose); }
+.chip-i { background: var(--teal-light); color: var(--teal); }
+.sub-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem; font-weight: 700; color: var(--gray-800);
+}
+.sub-count { font-size: 12px; color: var(--gray-400); margin-left: auto; font-family: 'JetBrains Mono', monospace; }
+
+/* ── CARDS GRID ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.1rem;
+}
+
+/* ── BASE CARD ── */
+.opp-card {
+  background: white; border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  overflow: hidden; transition: all 0.28s; position: relative;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  display: flex; flex-direction: column;
+}
+.opp-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 56px rgba(76,42,133,0.14);
+  border-color: rgba(76,42,133,0.18);
+}
+
+/* Card top accent band */
+.card-top-band { height: 4px; width: 100%; }
+.band-s { background: linear-gradient(90deg, var(--gold), #e8b84b); }
+.band-h { background: linear-gradient(90deg, var(--rose), #d45c78); }
+.band-i { background: linear-gradient(90deg, var(--teal), #3a9e96); }
+
+.card-body { padding: 1.2rem 1.4rem 0.8rem; flex: 1; }
+
+.card-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 11px; border-radius: 100px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.tag-tech { background: var(--purple-pale); color: var(--purple); }
+.tag-nontech { background: var(--gray-100); color: var(--gray-600); }
+.tag-hackathon { background: var(--rose-light); color: var(--rose); }
+.tag-coding { background: rgba(92,61,143,0.1); color: var(--purple); }
+.tag-challenge { background: var(--gold-light); color: #7a5a0a; }
+.tag-internship { background: var(--teal-light); color: var(--teal); }
+
+.card-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem; font-weight: 700; line-height: 1.3;
+  color: var(--gray-800); margin-bottom: 0.5rem;
+}
+.card-desc { font-size: 12.5px; color: var(--gray-600); line-height: 1.65; margin-bottom: 0.9rem; }
+
+.card-meta { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 0.8rem; }
+.meta-chip {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 11px; color: var(--gray-600);
+  background: var(--gray-100); padding: 3px 9px; border-radius: 6px;
+}
+.meta-chip strong { color: var(--gray-800); font-weight: 600; }
+.meta-chip.mode-online { background: var(--teal-light); color: var(--teal); }
+.meta-chip.mode-offline { background: var(--gray-100); color: var(--gray-600); }
+.meta-chip.mode-hybrid { background: var(--purple-pale); color: var(--purple); }
+
+.card-footer {
+  border-top: 1px solid var(--gray-200);
+  padding: 0.75rem 1.4rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.card-cta {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 600; text-decoration: none;
+  padding: 6px 14px; border-radius: 8px; transition: all 0.2s;
+}
+.cta-s { background: var(--gold-light); color: #7a5a0a; }
+.cta-s:hover { background: var(--gold); color: white; }
+.cta-h { background: var(--rose-light); color: var(--rose); }
+.cta-h:hover { background: var(--rose); color: white; }
+.cta-i { background: var(--teal-light); color: var(--teal); }
+.cta-i:hover { background: var(--teal); color: white; }
+
+.prize-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 600; color: var(--gold);
+  background: var(--gold-light); padding: 3px 9px; border-radius: 6px;
+}
+.diff-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 6px;
+}
+.diff-easy { background: #e8f5e9; color: #2e7d32; }
+.diff-medium { background: var(--teal-light); color: var(--teal); }
+.diff-high { background: var(--gold-light); color: #7a5a0a; }
+.diff-vhard { background: var(--rose-light); color: var(--rose); }
+
+/* ── WHY JOIN ── */
+#why { background: var(--purple); position: relative; overflow: hidden; }
+#why::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/svg%3E");
+}
+#why .section-label { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+#why .section-title { color: white; }
+#why .section-desc { color: rgba(255,255,255,0.65); }
+
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.3rem; margin-top: 2.8rem; }
+.why-card {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-lg); padding: 1.8rem;
+  transition: all 0.3s;
+}
+.why-card:hover { background: rgba(255,255,255,0.14); transform: translateY(-4px); }
+.why-icon {
+  width: 52px; height: 52px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem; font-size: 24px;
+  background: rgba(255,255,255,0.12);
+}
+.why-title { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; color: white; margin-bottom: 0.4rem; }
+.why-desc { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.7; }
+
+/* ── ABOUT ── */
+#about { background: white; }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+@media(max-width:768px){ .about-grid { grid-template-columns: 1fr; } }
+
+.about-visual {
+  border-radius: var(--radius-xl); overflow: hidden;
+  background: linear-gradient(135deg, var(--purple-pale), rgba(249,224,238,0.7));
+  padding: 2.8rem 2rem;
+  display: flex; flex-direction: column; gap: 1rem; align-items: center; text-align: center;
+  border: 1px solid var(--gray-200);
+}
+.about-logo {
+  width: 76px; height: 76px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: white;
+  box-shadow: 0 8px 32px rgba(76,42,133,0.35);
+}
+.about-college-name { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; color: var(--purple); }
+.about-loc { font-size: 12px; color: var(--gray-400); }
+.about-divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--purple), var(--pink)); border-radius: 2px; }
+
+.mission-items { display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 0.5rem; }
+.mission-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: white; border-radius: var(--radius-md); padding: 0.85rem 1rem;
+  border: 1px solid var(--gray-200); text-align: left;
+}
+.mi-icon { font-size: 20px; flex-shrink: 0; }
+.mi-title { font-weight: 600; font-size: 13px; color: var(--gray-800); }
+.mi-text { font-size: 11.5px; color: var(--gray-400); }
+
+.about-text .section-desc { color: var(--gray-600); max-width: 100%; margin-bottom: 1.2rem; }
+.about-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
+.about-pill {
+  padding: 6px 15px; border-radius: 100px; border: 1px solid rgba(76,42,133,0.2);
+  font-size: 12.5px; font-weight: 500; color: var(--purple); background: var(--purple-pale);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--gray-800); color: white;
+  padding: 4rem 2rem 2rem; text-align: center;
+}
+.footer-logo {
+  width: 58px; height: 58px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: white;
+  margin: 0 auto 1rem;
+  box-shadow: 0 6px 24px rgba(76,42,133,0.4);
+}
+.footer-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; }
+.footer-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 0.3rem; }
+.footer-tagline { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 0.5rem; letter-spacing: 0.06em; }
+.footer-hr { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 2rem 0 1.5rem; }
+.footer-bottom { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+/* ── NO RESULTS ── */
+.no-results {
+  text-align: center; padding: 4rem; color: var(--gray-400);
+  display: none;
+}
+.no-results-icon { font-size: 3rem; margin-bottom: 0.8rem; }
+
+/* ── SCROLL TOP ── */
+#scroll-top {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 60;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--purple); color: white;
+  border: none; cursor: pointer; font-size: 18px;
+  display: none; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(76,42,133,0.4); transition: all 0.2s;
+}
+#scroll-top:hover { background: var(--purple-mid); transform: translateY(-2px); }
+#scroll-top.show { display: flex; }
+
+/* ── MOBILE STICKY ── */
+.mobile-sticky {
+  display: none; position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  z-index: 80; background: var(--purple); color: white;
+  padding: 13px 30px; border-radius: 100px; font-weight: 600; font-size: 14px;
+  text-decoration: none; box-shadow: 0 8px 28px rgba(76,42,133,0.4); white-space: nowrap;
+}
+@media(max-width:640px){ .mobile-sticky { display: block; } }
+
+/* ── SECTION BLOCK visibility ── */
+.section-block[style*="display: none"] { display: none !important; }
+
+@media(max-width:640px){
+  .hero-stats { gap: 1.5rem; }
+  .cards-grid { grid-template-columns: 1fr; }
+  #hero { padding: 90px 1.2rem 4rem; }
+  .filter-bar { flex-direction: column; align-items: stretch; }
+  .filter-tabs { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+}
+</style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-brand">
+    <div class="nav-logo">S</div>
+    <div>
+      <div class="nav-name">SHE Leads</div>
+      <div class="nav-sub">SRM TRP Engineering College</div>
+    </div>
+  </a>
+  <div class="nav-pills">
+    <span class="nav-pill np-scholarship">🎓 41 Scholarships</span>
+    <span class="nav-pill np-hackathon">💻 42 Hackathons</span>
+    <span class="nav-pill np-internship">🏢 24 Internships</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="fshape" style="width:320px;height:320px;background:rgba(155,111,212,0.06);top:-100px;right:-80px;animation-duration:13s;"></div>
+  <div class="fshape" style="width:220px;height:220px;background:rgba(212,83,138,0.07);bottom:60px;left:-60px;animation-duration:10s;animation-delay:2s;"></div>
+  <div class="fshape" style="width:160px;height:160px;background:rgba(200,147,42,0.06);top:38%;right:8%;animation-duration:12s;animation-delay:1s;"></div>
+
+  <div style="position:relative;z-index:1;max-width:860px;width:100%;">
+    <div class="hero-badge">
+      <span class="badge-pulse"></span>
+      Women Empowerment Initiative · SRM TRP Engineering College
+    </div>
+
+    <h1 class="hero-title">
+      <em>SHE</em> Leads<br>Opportunities Built<br>for <em>Her</em> Future
+    </h1>
+
+    <div class="hero-tagline-wrap">
+      <div class="hero-tagline">
+        <div class="tagline-line">Lead. Innovate. Inspire.</div>
+        <div class="tagline-line">Where Women Build the Future</div>
+        <div class="tagline-line">Turn Ideas into Impact</div>
+        <div class="tagline-line">Your Leadership Journey Starts Here</div>
+      </div>
+    </div>
+
+    <p class="hero-desc">
+      Consolidated scholarships, hackathons, and internships — handpicked and curated for women in tech and beyond. Your next big opportunity is right here.
+    </p>
+
+    <div class="hero-btns">
+      <a href="#opportunities" class="btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        Explore Opportunities
+      </a>
+      <a href="#about" class="btn-outline">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        About SHE Leads
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">41</div><div class="stat-lbl">Scholarships</div></div>
+      <div class="stat-item"><div class="stat-num">42</div><div class="stat-lbl">Hackathons</div></div>
+      <div class="stat-item"><div class="stat-num">24</div><div class="stat-lbl">Internships</div></div>
+      <div class="stat-item"><div class="stat-num">107</div><div class="stat-lbl">Total Opportunities</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPPORTUNITIES -->
+<section class="section-wrap" id="opportunities">
+  <div class="container">
+    <div style="margin-bottom:2rem;">
+      <div class="section-label">🔭 All Opportunities</div>
+      <h2 class="section-title">Browse, Filter & <em>Apply</em></h2>
+      <p class="section-desc">Scholarships, hackathons, and internships — all in one place, curated for women who dare to lead.</p>
+    </div>
+
+    <div class="filter-bar">
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="search-input" placeholder="Search by name, domain, organization...">
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-type="all">All <span class="tab-count" id="cnt-all">107</span></button>
+        <button class="filter-tab" data-type="scholarship">🎓 Scholarships <span class="tab-count" id="cnt-s">41</span></button>
+        <button class="filter-tab" data-type="hackathon">💻 Hackathons <span class="tab-count" id="cnt-h">42</span></button>
+        <button class="filter-tab" data-type="internship">🏢 Internships <span class="tab-count" id="cnt-i">24</span></button>
+      </div>
+    </div>
+
+    <!-- SCHOLARSHIPS SECTION -->
+    <div class="section-block" data-section="scholarship">
+      <div class="sub-section-head">
+        <div class="section-chip chip-s">🎓 Scholarships</div>
+        <div class="sub-title">Funding Your Journey</div>
+        <div class="sub-count" id="s-count">41 opportunities</div>
+      </div>
+      <div class="cards-grid" id="s-grid"></div>
+    </div>
+
+    <!-- HACKATHONS SECTION -->
+    <div class="section-block" data-section="hackathon">
+      <div class="sub-section-head">
+        <div class="section-chip chip-h">💻 Hackathons & Contests</div>
+        <div class="sub-title">Build. Compete. Win.</div>
+        <div class="sub-count" id="h-count">42 opportunities</div>
+      </div>
+      <div class="cards-grid" id="h-grid"></div>
+    </div>
+
+    <!-- INTERNSHIPS SECTION -->
+    <div class="section-block" data-section="internship">
+      <div class="sub-section-head">
+        <div class="section-chip chip-i">🏢 Internships</div>
+        <div class="sub-title">Real-World Experience</div>
+        <div class="sub-count" id="i-count">24 opportunities</div>
+      </div>
+      <div class="cards-grid" id="i-grid"></div>
+    </div>
+
+    <div class="no-results" id="no-results">
+      <div class="no-results-icon">🔍</div>
+      <p>No opportunities match your search. Try different keywords.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY JOIN -->
+<section class="section-wrap" id="why">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="section-label">✨ Why Participate</div>
+    <h2 class="section-title">Why <em>SHE Leads?</em></h2>
+    <p class="section-desc">More than a tracker — a launchpad for your leadership journey.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🚀</div>
+        <div class="why-title">Build Real-World Skills</div>
+        <div class="why-desc">Hands-on hackathons and competitions designed to sharpen your technical and leadership capabilities for the real world.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💰</div>
+        <div class="why-title">Fund Your Education</div>
+        <div class="why-desc">Access scholarships from ₹25K to ₹1.5L from top organizations like Google, Infosys, Kotak, and more — specifically for women.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🏆</div>
+        <div class="why-title">Win Recognition</div>
+        <div class="why-desc">Compete in prize pools from ₹50K to $100K in hackathons. Build a portfolio that speaks louder than your resume.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💼</div>
+        <div class="why-title">Launch Your Career</div>
+        <div class="why-desc">Internships at Cisco, Google, Meta, Microsoft, and 20+ top companies — many with stipends up to ₹1.5L per month.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section-wrap" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-logo">S</div>
+        <div class="about-college-name">SRM TRP Engineering College</div>
+        <div class="about-loc">Tiruchirappalli, Tamil Nadu</div>
+        <div class="about-divider"></div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--purple);">SHE Leads</div>
+        <div style="font-size:12px;color:var(--gray-400);max-width:240px;text-align:center;">Empowering Women in Technology, Leadership & Innovation</div>
+        <div class="mission-items">
+          <div class="mission-item">
+            <span class="mi-icon">👩‍💻</span>
+            <div><div class="mi-title">Empower Women in Tech</div><div class="mi-text">Breaking barriers with knowledge, skill, and opportunity</div></div>
+          </div>
+          <div class="mission-item">
+            <span class="mi-icon">🌟</span>
+            <div><div class="mi-title">Encourage Leadership</div><div class="mi-text">Nurturing the next generation of bold innovators</div></div>
+          </div>
+          <div class="mission-item">
+            <span class="mi-icon">🔗</span>
+            <div><div class="mi-title">Build Community</div><div class="mi-text">Fostering a supportive network of ambitious women</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="section-label">🏫 About Us</div>
+        <h2 class="section-title">The <em>SHE Leads</em> Initiative</h2>
+        <p class="about-text" style="font-size:0.97rem;color:var(--gray-600);line-height:1.75;margin-bottom:1rem;">
+          SHE Leads is a flagship women empowerment initiative by SRM TRP Engineering College, Tiruchirappalli. Launched to celebrate the brilliance of women in science, technology, engineering, and mathematics, SHE Leads creates a powerful platform for students to discover, compete, and grow.
+        </p>
+        <p style="font-size:0.97rem;color:var(--gray-600);line-height:1.75;margin-bottom:1.5rem;">
+          This curated tracker brings together 107 real opportunities — scholarships, hackathons, and internships — from top organizations worldwide, all handpicked for women who dare to lead.
+        </p>
+        <div class="about-pills">
+          <span class="about-pill">🎓 41 Scholarships</span>
+          <span class="about-pill">💻 42 Hackathons</span>
+          <span class="about-pill">🏢 24 Internships</span>
+          <span class="about-pill">👩‍🔬 STEM Empowerment</span>
+          <span class="about-pill">🌍 Inclusive & Diverse</span>
+          <span class="about-pill">💼 Career Development</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">S</div>
+  <div class="footer-title">SHE Leads</div>
+  <div class="footer-sub">SRM TRP Engineering College · Tiruchirappalli, Tamil Nadu</div>
+  <div class="footer-tagline">LEAD · INNOVATE · INSPIRE</div>
+  <div class="footer-hr"></div>
+  <div class="footer-bottom">© 2025 SHE Leads Initiative — SRM TRP Engineering College. All rights reserved.</div>
+</footer>
+
+<a href="#opportunities" class="mobile-sticky">🔍 Browse Opportunities</a>
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ──────────────── DATA ────────────────
+
+const scholarships = [
+  { name:"Rolls-Royce Wings4Her Scholarship", type:"Tech", desc:"₹35,000 award plus mentorship for female engineering students in years 1–3.", link:"https://www.buddy4study.com/page/rolls-royce-wings4her-scholarship-for-women-engineering-students" },
+  { name:"MWCD Paid Internship (Govt of India)", type:"Non-Tech", desc:"2-month policy internship with ₹20,000 stipend for women from non-tier 1/rural areas.", link:"https://wcd.intern.nic.in" },
+  { name:"Ericsson Empowering Girl Scholarship", type:"Tech", desc:"Provides ₹75,000 to 2nd-year female engineering students in IT and Telecom.", link:"https://www.buddy4study.com/page/ericsson-empowering-girl-scholarship-program" },
+  { name:"Kotak Kanya Scholarship", type:"Non-Tech", desc:"Offers up to ₹1.5 Lakh per year for meritorious girls pursuing professional degrees.", link:"https://www.buddy4study.com/page/kotak-kanya-scholarship" },
+  { name:"Winnie Sun Scholarship", type:"Non-Tech", desc:"₹65,000 annual scholarship for girls from low-income families.", link:"https://www.buddy4study.com" },
+  { name:"Infosys Foundation STEM Stars", type:"Tech", desc:"Supports female undergraduate students in STEM with ₹1,00,000 per annum.", link:"https://www.buddy4study.com" },
+  { name:"Flipkart Girls Wanna Code 7.0", type:"Tech", desc:"Upskilling challenge with real-world problems and PPI opportunities for internships.", link:"https://hack-the-opportunities.netlify.app/" },
+  { name:"MEA Internship Programme", type:"Non-Tech", desc:"External Affairs Ministry internship with a ₹10,000 monthly honorarium.", link:"https://mea.gov.in/internship-mea.htm" },
+  { name:"Amazon Future Engineer Scholarship", type:"Tech", desc:"₹50,000 per year for 4 years plus specialized bootcamps and Amazon internships.", link:"https://www.amazonfutureengineer.in/scholarship" },
+  { name:"Legrand Empowering Scholarship", type:"Tech", desc:"Financial aid specifically for girls pursuing B.Tech or Architecture.", link:"https://legrandscholarship.co.in/" },
+  { name:"Virtusa Engineering Excellence", type:"Tech", desc:"₹50,000 financial assistance for female engineering students based on merit.", link:"https://www.buddy4study.com" },
+  { name:"Panasonic Ratti Chhatr Scholarship", type:"Tech", desc:"₹70,250 annual support for female B.Tech students from top institutions.", link:"https://www.buddy4study.com" },
+  { name:"JK Tyre Shiksha Sarthi", type:"Non-Tech", desc:"One-time scholarship of ₹25,000 for female students from transport families.", link:"https://www.buddy4study.com" },
+  { name:"HDFC Parivartan ECSS", type:"Non-Tech", desc:"Up to ₹75,000 aid for students facing crisis, with preference for females.", link:"https://www.parivartanecss.com/" },
+  { name:"VBYLD 2026 Hackathon", type:"Tech", desc:"Ministry-led hackathon track for social cause solutions in Jan 2026.", link:"https://yuvakhel.nic.in/" },
+  { name:"AI by Her Global Challenge", type:"Tech", desc:"Mentorship and pitch platform for women-led AI teams at the 2026 Summit.", link:"https://www.ai4all.org/programs" },
+  { name:"Nestlé Nesternship", type:"Non-Tech", desc:"Corporate internship program for students across marketing, HR, and sales.", link:"https://www.nestle.in/jobs/nesternship" },
+  { name:"Siemens Scholarship Program", type:"Tech", desc:"Financial aid and holistic development for girls in technical streams.", link:"https://www.siemens.co.in/about/siemens-scholarship-program" },
+  { name:"Marriott Voyage Program 2026", type:"Non-Tech", desc:"Leadership development internship for female graduates in the hospitality sector.", link:"https://careers.marriott.com" },
+  { name:"CARE India Woman Internship", type:"Non-Tech", desc:"Social sector internship focused on maternal health and women's empowerment.", link:"https://www.careindia.org/get-involved/internships/" },
+  { name:"Nasscom SME Inspire Awards", type:"Tech", desc:"Recognition and mentorship platform for women-led small tech enterprises.", link:"https://nasscom.in/" },
+  { name:"BioE3 Challenge", type:"Tech", desc:"Biotechnology innovation challenge for young female students and researchers.", link:"https://www.biotechunipune.org/" },
+  { name:"Aadhar Kaushal Scholarship", type:"Non-Tech", desc:"Funding for female students in vocational or higher education courses.", link:"https://www.buddy4study.com" },
+  { name:"Venkat Panchapakesan Scholarship", type:"Tech", desc:"Award for students using technology to create significant social impact.", link:"https://www.buddy4study.com" },
+  { name:"Viksit Bharat Challenge", type:"Non-Tech", desc:"PPT and essay competition on women-led development for the 2026 festival.", link:"https://www.mygov.in/" },
+  { name:"Linux Foundation LiFT Scholarship", type:"Tech", desc:"Training and certification for women entering open-source software.", link:"https://training.linuxfoundation.org/scholarships/lift/" },
+  { name:"Pragati AICTE Scholarship", type:"Tech", desc:"₹50,000 annually for girls admitted to technical degree/diploma courses.", link:"https://www.aicte-india.org/schemes/students-development-schemes/Pragati" },
+  { name:"Nutanix WiT Scholarship", type:"Tech", desc:"Mentorship and funding for female computer science and engineering students.", link:"https://www.nutanix.com" },
+  { name:"Design for Bharat Challenge", type:"Non-Tech", desc:"Youth innovation challenge for social impact ideas at the national level.", link:"https://www.mygov.in/" },
+  { name:"Colgate Keep India Smiling", type:"Non-Tech", desc:"Up to ₹75,000 scholarship for girls pursuing professional courses.", link:"https://www.colgatepalmolive.com" },
+  { name:"Aditya Birla Capital Scholarship", type:"Non-Tech", desc:"Financial support for female students from Class 9 up to Graduation.", link:"https://www.buddy4study.com" },
+  { name:"SBI Foundation Asha Scholarship", type:"Non-Tech", desc:"Nationwide scholarship for meritorious female students from low-income groups.", link:"https://www.buddy4study.com" },
+  { name:"Mahindra EmpowerHer Scholarship", type:"Non-Tech", desc:"Corporate funding for girl students to pursue their higher education dreams.", link:"https://www.mahindra.com" },
+  { name:"Nasscom Makers Honor Awards", type:"Tech", desc:"Award for female engineers who have developed innovative tech solutions.", link:"https://nasscom.in/" },
+  { name:"WEI Business Pitch Competition", type:"Non-Tech", desc:"Pitching platform for women entrepreneurs with cash prizes in March 2026.", link:"https://www.womeneconomicforum.org/" },
+  { name:"My AI Future Reel Contest", type:"Tech", desc:"Competition for creating AI-themed digital content for female tech enthusiasts.", link:"https://www.mygov.in/" },
+  { name:"Viksit Bharat Young Leaders", type:"Non-Tech", desc:"National platform for women to showcase leadership in policy and innovation.", link:"https://www.mygov.in/" },
+  { name:"SWE India Scholars Program", type:"Tech", desc:"₹85,000 award for women in engineering at Washington Accord-accredited colleges.", link:"https://swe.org/scholarships/" },
+  { name:"HCL Tech Bee for Women", type:"Tech", desc:"Early career program combining work with a fully sponsored higher education degree.", link:"https://www.hcltech.com" },
+  { name:"Google Women in Silicon Hardware (WISH)", type:"Tech", desc:"15-month immersive program including mentorship in hardware engineering.", link:"https://wish.talentsprint.com/" },
+  { name:"Flipkart Girls Wanna Code 7.0 (B)", type:"Tech", desc:"Upskilling challenge with real-world problems and PPI opportunities for internships.", link:"https://hack-the-opportunities.netlify.app/" },
+];
+
+const hackathons = [
+  { name:"FOSS Hack 2026", cat:"Hackathon", org:"FOSS United", timeline:"Mar 1–31, 2026", mode:"Hybrid", domain:"Open Source", prize:"₹5,00,000+", elig:"1–4 members", link:"https://fossunited.org/fosshack/2026" },
+  { name:"StudyIn Hackathon", cat:"Hackathon", org:"StudyIn", timeline:"Mar 21–29", mode:"Online", domain:"Tech/Coding", prize:"—", elig:"Open", link:"https://www.hackerearth.com/challenges/competitive/studyin-2025/" },
+  { name:"Goldman Sachs India Hackathon", cat:"Hackathon", org:"Goldman Sachs", timeline:"Apr 22 – May 22", mode:"Online", domain:"DSA/Quant", prize:"—", elig:"Selected students", link:"https://www.hackerrank.com/goldman-sachs-india-hackathon-2025" },
+  { name:"Smart India Hackathon", cat:"Hackathon", org:"Ministry of Education", timeline:"Aug–Dec", mode:"Hybrid", domain:"AI/ML", prize:"₹1,00,000", elig:"Students", link:"https://sih.gov.in" },
+  { name:"Google Solution Challenge", cat:"Hackathon", org:"Google", timeline:"6 Mar – 28 Apr", mode:"Online", domain:"AI/SDG", prize:"$3K–$12K", elig:"Students", link:"https://developers.google.com/community/gdsc-solution-challenge" },
+  { name:"NASA Space Apps Challenge", cat:"Hackathon", org:"NASA", timeline:"October", mode:"Hybrid", domain:"AI/Data", prize:"—", elig:"Open", link:"https://www.spaceappschallenge.org" },
+  { name:"Meta Hacker Cup", cat:"Coding Contest", org:"Meta", timeline:"Apr 2025", mode:"Online", domain:"Algorithms", prize:"—", elig:"Open", link:"https://www.facebook.com/codingcompetitions/hacker-cup" },
+  { name:"AWS AI Conclave Hackathon", cat:"Hackathon", org:"AWS", timeline:"Varies", mode:"Hybrid", domain:"Cloud AI", prize:"—", elig:"Open", link:"https://aws.amazon.com/events" },
+  { name:"NVIDIA AI Hackathon", cat:"Hackathon", org:"NVIDIA", timeline:"Apr 28 – May 21", mode:"Online", domain:"Deep Learning", prize:"$25K", elig:"Open", link:"https://developer.nvidia.com/hackathons" },
+  { name:"MLH Global Hackathons", cat:"Hackathon", org:"MLH", timeline:"Weekly", mode:"Online", domain:"AI/Automation", prize:"—", elig:"Open", link:"https://mlh.io" },
+  { name:"IIT Delhi HackOverflow", cat:"Hackathon", org:"IIT Delhi", timeline:"Feb", mode:"Offline", domain:"AI Systems", prize:"₹50K–₹2L", elig:"Students", link:"https://esya.iiitd.edu.in" },
+  { name:"IIT Bombay E-Yantra", cat:"Hackathon", org:"IIT Bombay", timeline:"Nov", mode:"Hybrid", domain:"Robotics/AI", prize:"₹1L", elig:"Students", link:"https://e-yantra.org" },
+  { name:"MIT Solve", cat:"Challenge", org:"MIT", timeline:"Apr–Aug", mode:"Online", domain:"AI Impact", prize:"$10K–$100K", elig:"Open", link:"https://solve.mit.edu" },
+  { name:"ETH Zurich AI Hack", cat:"Hackathon", org:"ETH Zurich", timeline:"Annual", mode:"Offline", domain:"AI", prize:"€10K", elig:"Open", link:"https://ai.ethz.ch" },
+  { name:"Stanford TreeHacks", cat:"Hackathon", org:"Stanford", timeline:"Feb", mode:"Hybrid", domain:"AI/ML", prize:"—", elig:"Students", link:"https://www.treehacks.com" },
+  { name:"Google Cloud AI Hack", cat:"Hackathon", org:"Google", timeline:"Yearly", mode:"Online", domain:"Cloud AI", prize:"—", elig:"Students", link:"https://cloud.google.com" },
+  { name:"Hack2Skill AI Hackfest", cat:"Hackathon", org:"Hack2Skill", timeline:"Monthly", mode:"Online", domain:"AI", prize:"₹10K–₹1.5L", elig:"Open", link:"https://hack2skill.com" },
+  { name:"Devfolio Hackathons", cat:"Hackathon", org:"Devfolio", timeline:"Year-round", mode:"Hybrid", domain:"AI/Web3", prize:"—", elig:"Open", link:"https://devfolio.co/hackathons" },
+  { name:"T-Hub AI Hackathon", cat:"Hackathon", org:"T-Hub", timeline:"Aug–Dec", mode:"Hybrid", domain:"GenAI", prize:"₹3L", elig:"Open", link:"https://t-hub.co" },
+  { name:"Flipkart GRiD", cat:"Hackathon", org:"Flipkart", timeline:"Jul–Sep", mode:"Online", domain:"AI/ML", prize:"₹1.5L", elig:"Students", link:"https://unstop.com" },
+  { name:"Amazon ML Challenge", cat:"Hackathon", org:"Amazon", timeline:"May–Aug", mode:"Online", domain:"ML", prize:"₹3L", elig:"Students", link:"https://unstop.com" },
+  { name:"TechGig Code Gladiators", cat:"Hackathon", org:"TechGig", timeline:"Mar–Jul", mode:"Online", domain:"AI/ML", prize:"₹10L", elig:"Open", link:"https://www.techgig.com" },
+  { name:"CodeChef SnackDown", cat:"Coding Hackathon", org:"CodeChef", timeline:"Aug–Nov", mode:"Online", domain:"Competitive Coding", prize:"₹3L", elig:"Open", link:"https://www.codechef.com/snackdown" },
+  { name:"Google Hash Code", cat:"Coding Hackathon", org:"Google", timeline:"March", mode:"Online", domain:"Problem Solving", prize:"Swag", elig:"Team", link:"https://codingcompetitions.withgoogle.com" },
+  { name:"MLH Season", cat:"Coding Hackathon", org:"MLH", timeline:"Weekly", mode:"Online", domain:"Creative Coding", prize:"—", elig:"Open", link:"https://mlh.io" },
+  { name:"HackClub Arcade", cat:"Coding Hackathon", org:"HackClub", timeline:"Always Open", mode:"Online", domain:"Creative Dev", prize:"$100–$500", elig:"Open", link:"https://hackclub.com/arcade" },
+  { name:"Devfolio Buildathons", cat:"Coding Hackathon", org:"Devfolio", timeline:"Year-round", mode:"Hybrid", domain:"Apps/Games", prize:"—", elig:"Open", link:"https://devfolio.co/hackathons" },
+  { name:"IIT Bombay Mood Indigo Hackathon", cat:"Coding Hackathon", org:"IIT Bombay", timeline:"December", mode:"Offline", domain:"Creative Coding", prize:"₹1L+", elig:"Students", link:"https://moodi.org" },
+  { name:"HackInOut", cat:"Coding Hackathon", org:"HackerEarth", timeline:"Oct–Dec", mode:"Offline", domain:"Creative Coding", prize:"₹5L+", elig:"Open", link:"https://hackinout.co" },
+  { name:"JSConf India Hack Jam", cat:"Coding Hackathon", org:"JSConf India", timeline:"Annual", mode:"Offline", domain:"Web/JS", prize:"—", elig:"Open", link:"https://www.jsconf.in" },
+  { name:"AngelHack Global", cat:"Coding Hackathon", org:"AngelHack", timeline:"Apr–Aug", mode:"Hybrid", domain:"App Dev", prize:"—", elig:"Open", link:"https://angelhack.com" },
+  { name:"GitHub Octernships", cat:"Coding Hackathon", org:"GitHub", timeline:"Ongoing", mode:"Online", domain:"Open Source", prize:"—", elig:"Open", link:"https://github.com/octernships" },
+  { name:"HackVerse NITK", cat:"Coding Hackathon", org:"NITK", timeline:"February", mode:"Offline", domain:"UI/Creative", prize:"₹1–4L", elig:"Students", link:"https://hackverse.nitk.ac.in" },
+  { name:"Unscript 4.0", cat:"Coding Hackathon", org:"CodingBlocks", timeline:"March", mode:"Online", domain:"App Dev", prize:"₹1–2L", elig:"Open", link:"https://unscript.cb.lk" },
+  { name:"ETHGlobal Hackathons", cat:"Coding Hackathon", org:"ETHGlobal", timeline:"Monthly", mode:"Online", domain:"Web3/AI", prize:"$500–$20K", elig:"Open", link:"https://ethglobal.com" },
+  { name:"MLH Vibe Themes", cat:"Coding Hackathon", org:"MLH", timeline:"Weekly", mode:"Online", domain:"Creative Dev", prize:"—", elig:"Open", link:"https://mlh.io" },
+  { name:"GameDev India Jam", cat:"Coding Hackathon", org:"GameDev India", timeline:"July", mode:"Online", domain:"Game Dev", prize:"₹50K", elig:"Open", link:"https://gamedev.in" },
+  { name:"buildspace Nights", cat:"Coding Hackathon", org:"buildspace", timeline:"Quarterly", mode:"Online", domain:"Projects", prize:"$3K", elig:"Open", link:"https://buildspace.so" },
+  { name:"Figma India Hackathon", cat:"Coding Hackathon", org:"Figma", timeline:"Varies", mode:"Online", domain:"UI/UX", prize:"—", elig:"Open", link:"https://www.figma.com/events" },
+  { name:"Hack This Fall", cat:"Coding Hackathon", org:"HackThisFall", timeline:"October", mode:"Online", domain:"Innovation", prize:"—", elig:"Open", link:"https://hackthisfall.tech" },
+  { name:"Outlier Coding Challenge", cat:"Coding Hackathon", org:"Outlier Ventures", timeline:"Annual", mode:"Online", domain:"AI/UX", prize:"$10K", elig:"Open", link:"https://outlierventures.io" },
+  { name:"FOSS United Hackathon", cat:"Coding Hackathon", org:"FOSS United", timeline:"Monthly", mode:"Hybrid", domain:"Open Source", prize:"₹1L+", elig:"Open", link:"https://fossunited.org/hackathon" },
+];
+
+const internships = [
+  { name:"Cisco Women Internship", org:"Cisco", domain:"Software/Networking", stipend:"₹35k–₹55k", skills:"Python, Linux", elig:"BTech/MTech", diff:"Hard", link:"https://careers.cisco.com/global/en/india/cwip" },
+  { name:"Amazon Future Engineer", org:"Amazon", domain:"ML/Data", stipend:"₹70k–₹1.2L", skills:"DSA, Python", elig:"CS/IT", diff:"Very Hard", link:"https://www.amazonfutureengineer.com/" },
+  { name:"Accenture Women Tech", org:"Accenture", domain:"Cloud/Data", stipend:"₹25k–₹45k", skills:"Python, SQL", elig:"CS/IT", diff:"Medium", link:"https://www.accenture.com/in-en/careers/life-at-accenture/career-reboot-program" },
+  { name:"Google WTM", org:"Google", domain:"AI/Cloud", stipend:"₹80k–₹1.2L", skills:"DSA, ML", elig:"Tech students", diff:"High", link:"https://womentechmakersonair.withgoogle.com/" },
+  { name:"Microsoft Women in Tech", org:"Microsoft", domain:"SDE/PM", stipend:"₹70k–₹1.1L", skills:"Coding, System Design", elig:"CS/IT", diff:"High", link:"https://careers.microsoft.com/v2/global/en/students" },
+  { name:"Google STEP", org:"Google", domain:"Software Dev", stipend:"₹80k–₹1.2L", skills:"DSA", elig:"1st–2nd year", diff:"Very Hard", link:"https://www.google.com/about/careers/applications/buildyourfuture/programs/step" },
+  { name:"Adobe Women Internship", org:"Adobe", domain:"ML/UI", stipend:"₹50k–₹1L", skills:"Coding, ML", elig:"CS/IT", diff:"High", link:"https://careers.adobe.com/us/en/intern-and-graduate" },
+  { name:"IBM Internship", org:"IBM", domain:"Cloud/Data", stipend:"₹20k–₹50k", skills:"Python, SQL", elig:"UG/PG", diff:"Medium", link:"https://www.ibm.com/in-en/careers/internships" },
+  { name:"Infosys Internship", org:"Infosys", domain:"Data/Cloud", stipend:"₹15k–₹25k", skills:"Coding basics", elig:"BTech/MCA", diff:"Medium", link:"https://www.infosys.com/careers/internships.html" },
+  { name:"Meta Women Program", org:"Meta", domain:"ML/Systems", stipend:"₹1L–₹1.5L", skills:"System Design", elig:"Engineering", diff:"Very Hard", link:"https://www.metacareers.com/blog/women-empowering-women" },
+  { name:"Uber She++", org:"Uber", domain:"Backend", stipend:"₹50k–₹90k", skills:"Java, DSA", elig:"CS/IT", diff:"High", link:"https://jobs.uber.com/en/teams/emerging-talent/sheplusplus/" },
+  { name:"Intel Women Innovators", org:"Intel", domain:"Hardware/AI", stipend:"₹30k–₹60k", skills:"Electronics, ML", elig:"ECE/CS", diff:"High", link:"https://www.intel.com/content/www/us/en/corporate-responsibility/social-impact-and-educational-initiatives/she-will-connect.html" },
+  { name:"Nvidia Women AI", org:"Nvidia", domain:"Deep Learning", stipend:"₹60k–₹1.2L", skills:"Python, DL", elig:"AI/ML", diff:"Very Hard", link:"https://www.nvidia.com/en-us/research/internships/" },
+  { name:"SAP Internship", org:"SAP", domain:"Java/Cloud", stipend:"₹25k–₹45k", skills:"Java, DB", elig:"CS/IT", diff:"Medium", link:"https://jobs.sap.com/content/students/" },
+  { name:"Zoho Internship", org:"Zoho", domain:"Product Eng", stipend:"₹12k–₹25k", skills:"C++/Java", elig:"Engineering", diff:"Medium", link:"https://www.zoho.com/people/hr-glossary/internship.html" },
+  { name:"Swiggy SheCodes", org:"Swiggy", domain:"Backend", stipend:"₹15k–₹30k", skills:"JS, Python", elig:"CS", diff:"Medium", link:"https://careers.swiggy.com/#/" },
+  { name:"Paytm SheBuild", org:"Paytm", domain:"Data/AI", stipend:"₹15k–₹30k", skills:"SQL, Python", elig:"UG/PG", diff:"Medium", link:"https://paytm.com/careers" },
+  { name:"HCL Women Tech", org:"HCL", domain:"Cloud/Testing", stipend:"₹12k–₹25k", skills:"Testing, Java", elig:"Engineering", diff:"Medium", link:"https://www.hcltech.com/shepowersprogress" },
+  { name:"TCS Internship", org:"TCS", domain:"Coding/Testing", stipend:"₹12k–₹22k", skills:"C/Java", elig:"Tech", diff:"Medium", link:"https://www.tcs.com/careers/india/internship" },
+  { name:"LinkedIn Women Tech", org:"LinkedIn", domain:"Frontend/ML", stipend:"₹50k–₹80k", skills:"React, DSA", elig:"CS", diff:"High", link:"https://www.linkedin.com/company/womentech-network/?originalSubdomain=in" },
+  { name:"Adobe SheSpark", org:"Adobe", domain:"UI/UX", stipend:"₹25k–₹45k", skills:"HTML/CSS", elig:"Design/Tech", diff:"Medium", link:"https://careers.adobe.com/us/en/intern-and-graduate" },
+  { name:"PayPal Women Who Code", org:"PayPal", domain:"Backend/Security", stipend:"₹40k–₹70k", skills:"DSA, Java", elig:"CS", diff:"High", link:"https://womenwhocode.com/" },
+  { name:"Cognizant Internship", org:"Cognizant", domain:"Cloud/Data", stipend:"₹12k–₹25k", skills:"Coding basics", elig:"UG/PG", diff:"Easy-Medium", link:"https://careers.cognizant.com/india-en/pathways-to-cognizant/students-and-new-grads/" },
+  { name:"Ola Electric Internship", org:"Ola", domain:"EV Tech", stipend:"₹20k–₹40k", skills:"Electrical basics", elig:"Engineering", diff:"Medium", link:"https://www.olaelectric.com/careers" },
+];
+
+// ──────────────── BUILD CARDS ────────────────
+
+function safeUrl(u) {
+  if (!u || u === 'NaN' || u === 'nan') return '#';
+  return u.startsWith('http') ? u : 'https://' + u;
+}
+
+function modeClass(m) {
+  if (!m) return '';
+  const lm = m.toLowerCase();
+  if (lm === 'online') return 'mode-online';
+  if (lm === 'offline') return 'mode-offline';
+  if (lm === 'hybrid') return 'mode-hybrid';
+  return '';
+}
+
+function diffClass(d) {
+  if (!d) return 'diff-medium';
+  const ld = d.toLowerCase();
+  if (ld.includes('very hard')) return 'diff-vhard';
+  if (ld.includes('high') || ld.includes('hard')) return 'diff-high';
+  if (ld.includes('easy')) return 'diff-easy';
+  return 'diff-medium';
+}
+
+function buildScholarshipCard(s) {
+  const isTech = s.type === 'Tech';
+  const tagClass = isTech ? 'tag-tech' : 'tag-nontech';
+  const tagLabel = isTech ? '⚡ Tech' : '🌸 Non-Tech';
+  return `
+    <div class="opp-card" data-type="scholarship" data-search="${(s.name+' '+s.desc+' '+s.type).toLowerCase()}">
+      <div class="card-top-band band-s"></div>
+      <div class="card-body">
+        <div class="card-tag ${tagClass}">${tagLabel}</div>
+        <div class="card-name">${s.name}</div>
+        <div class="card-desc">${s.desc}</div>
+      </div>
+      <div class="card-footer">
+        <a href="${safeUrl(s.link)}" target="_blank" rel="noopener" class="card-cta cta-s">Apply Now ↗</a>
+      </div>
+    </div>`;
+}
+
+function buildHackathonCard(h) {
+  const cl = (h.cat || '').toLowerCase();
+  let tagClass = 'tag-hackathon', tagLabel = '🚀 Hackathon';
+  if (cl.includes('coding')) { tagClass = 'tag-coding'; tagLabel = '💻 Coding'; }
+  if (cl.includes('challenge')) { tagClass = 'tag-challenge'; tagLabel = '🏆 Challenge'; }
+  if (cl.includes('contest')) { tagClass = 'tag-challenge'; tagLabel = '🎯 Contest'; }
+  const hasPrize = h.prize && h.prize !== '—' && h.prize !== 'NaN';
+  const mc = modeClass(h.mode);
+  return `
+    <div class="opp-card" data-type="hackathon" data-search="${(h.name+' '+h.org+' '+h.domain+' '+h.cat).toLowerCase()}">
+      <div class="card-top-band band-h"></div>
+      <div class="card-body">
+        <div class="card-tag ${tagClass}">${tagLabel}</div>
+        <div class="card-name">${h.name}</div>
+        <div class="card-meta">
+          <div class="meta-chip">🏢 <strong>${h.org}</strong></div>
+          <div class="meta-chip">📅 ${h.timeline}</div>
+          <div class="meta-chip ${mc}">${h.mode}</div>
+          <div class="meta-chip">🔬 ${h.domain}</div>
+          ${h.elig && h.elig !== 'NaN' ? `<div class="meta-chip">👥 ${h.elig}</div>` : ''}
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="${safeUrl(h.link)}" target="_blank" rel="noopener" class="card-cta cta-h">Register ↗</a>
+        ${hasPrize ? `<span class="prize-tag">🏅 ${h.prize}</span>` : ''}
+      </div>
+    </div>`;
+}
+
+function buildInternshipCard(i) {
+  const dc = diffClass(i.diff);
+  return `
+    <div class="opp-card" data-type="internship" data-search="${(i.name+' '+i.org+' '+i.domain+' '+i.skills).toLowerCase()}">
+      <div class="card-top-band band-i"></div>
+      <div class="card-body">
+        <div class="card-tag tag-internship">🏢 Internship</div>
+        <div class="card-name">${i.name}</div>
+        <div class="card-meta">
+          <div class="meta-chip">🏢 <strong>${i.org}</strong></div>
+          <div class="meta-chip">💼 ${i.domain}</div>
+          <div class="meta-chip">💰 ${i.stipend}</div>
+          <div class="meta-chip">🎓 ${i.elig}</div>
+          <div class="meta-chip">🔧 ${i.skills}</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="${safeUrl(i.link)}" target="_blank" rel="noopener" class="card-cta cta-i">Apply ↗</a>
+        <span class="diff-tag ${dc}">${i.diff}</span>
+      </div>
+    </div>`;
+}
+
+// ──────────────── INITIAL RENDER ────────────────
+
+document.getElementById('s-grid').innerHTML = scholarships.map(buildScholarshipCard).join('');
+document.getElementById('h-grid').innerHTML = hackathons.map(buildHackathonCard).join('');
+document.getElementById('i-grid').innerHTML = internships.map(buildInternshipCard).join('');
+
+// ──────────────── FILTER LOGIC ────────────────
+
+let currentType = 'all';
+let currentSearch = '';
+
+function applyFilters() {
+  const allCards = document.querySelectorAll('.opp-card');
+  const sections = document.querySelectorAll('.section-block');
+  const counts = { scholarship: 0, hackathon: 0, internship: 0 };
+  let total = 0;
+
+  allCards.forEach(card => {
+    const t = card.dataset.type;
+    const s = card.dataset.search || '';
+    const typeOk = currentType === 'all' || t === currentType;
+    const searchOk = !currentSearch || s.includes(currentSearch);
+    const vis = typeOk && searchOk;
+    card.style.display = vis ? '' : 'none';
+    if (vis) { counts[t]++; total++; }
+  });
+
+  sections.forEach(sec => {
+    const st = sec.dataset.section;
+    const secVis = (currentType === 'all' || currentType === st) && counts[st] > 0;
+    sec.style.display = secVis ? '' : 'none';
+  });
+
+  document.getElementById('s-count').textContent = counts.scholarship + ' opportunities';
+  document.getElementById('h-count').textContent = counts.hackathon + ' opportunities';
+  document.getElementById('i-count').textContent = counts.internship + ' opportunities';
+  document.getElementById('cnt-all').textContent = scholarships.length + hackathons.length + internships.length;
+  document.getElementById('cnt-s').textContent = counts.scholarship;
+  document.getElementById('cnt-h').textContent = counts.hackathon;
+  document.getElementById('cnt-i').textContent = counts.internship;
+
+  document.getElementById('no-results').style.display = total === 0 ? 'block' : 'none';
+}
+
+document.querySelectorAll('.filter-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentType = btn.dataset.type;
+    applyFilters();
+  });
+});
+
+document.getElementById('search-input').addEventListener('input', e => {
+  currentSearch = e.target.value.toLowerCase().trim();
+  applyFilters();
+});
+
+// ──────────────── SCROLL EFFECTS ────────────────
+
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const pct = (window.scrollY / (doc.scrollHeight - doc.clientHeight)) * 100;
+  document.getElementById('scroll-progress').style.width = pct + '%';
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('scroll-top').classList.toggle('show', window.scrollY > 500);
+});
+</script>
+</body>
+</html>
